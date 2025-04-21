@@ -1,13 +1,18 @@
 from fastapi import FastAPI
 
+from db import get_all_tasks, get_all_columns, get_all_boards
+
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/tasks")
 async def root():
-    return {"message": "Hello World"}
+    return get_all_tasks()
 
+@app.get("/columns")
+async def root():
+    return get_all_columns()
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+@app.get("/boards")
+async def root():
+    return get_all_boards()
