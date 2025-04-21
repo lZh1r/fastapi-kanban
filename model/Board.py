@@ -2,6 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Column:
+class Board:
     title: str
     id: int = 0
