@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from db import get_all_tasks, get_all_columns, get_all_boards, delete_task, insert_task, insert_column, delete_column, \
-    insert_board, delete_board, edit_column, edit_task, edit_board
+    insert_board, delete_board, edit_column, edit_task, edit_board, get_tasks_from_col
 
 from model.Task import Task
 from model.Column import Column
@@ -13,6 +13,10 @@ app = FastAPI()
 @app.get("/tasks")
 async def get_tasks():
     return get_all_tasks()
+
+@app.get("/tasks/{col_id}")
+async def get_tasks_by_col(col_id: int):
+    return get_tasks_from_col(col_id)
 
 @app.post("/tasks")
 async def create_task(task: Task):

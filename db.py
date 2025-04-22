@@ -18,6 +18,14 @@ def get_all_tasks():
         cur.execute("SELECT * FROM task ORDER BY id;")
         return cur.fetchall()
 
+def get_tasks_from_col(col_id: int):
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT * FROM task WHERE column_id = %s ORDER BY id;",
+            (col_id,)
+        )
+        return cur.fetchall()
+
 def insert_task(task: Task):
     with conn.cursor() as cur:
         cur.execute(
