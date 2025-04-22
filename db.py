@@ -1,8 +1,11 @@
+import time
+
 import psycopg2
 
 from model.Task import Task
 from model.Column import Column
 from model.Board import Board
+from model.Log import log
 
 conn = psycopg2.connect(
     host="localhost",
@@ -12,6 +15,7 @@ conn = psycopg2.connect(
     port="5432",
 )
 conn.autocommit = True
+
 
 def get_all_tasks():
     with conn.cursor() as cur:
@@ -37,6 +41,7 @@ def insert_task(task: Task):
 def delete_task(task_id: int):
     with conn.cursor() as cur:
         cur.execute("DELETE FROM task WHERE id = %s;", (task_id,))
+        log("delete", task_id, conn)
     return True
 
 def edit_task(task: Task, task_id: int):
@@ -45,6 +50,7 @@ def edit_task(task: Task, task_id: int):
             "UPDATE task SET column_id = %s, title = %s, description = %s, is_completed = %s WHERE id = %s;",
             (task.column_id, task.title, task.description, task.is_completed, task_id)
         )
+        log("edit", task_id, conn)
     return True
 
 
@@ -100,3 +106,8 @@ def edit_board(board: Board, board_id: int):
             (board.title, board_id)
         )
     return True
+
+def get_logs():
+    with conn.cursor() as cur:
+        cur.execute("SELECT * FROM history ORDER BY id;")
+        return cur.fetchall()
