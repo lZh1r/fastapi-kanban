@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 
 from db import get_all_tasks, get_all_columns, get_all_boards, delete_task, insert_task, insert_column, delete_column, \
-    insert_board, delete_board, edit_column, edit_task, edit_board, get_tasks_from_col, get_logs
+    insert_board, delete_board, edit_column, edit_task, edit_board, get_tasks_from_col, get_logs, register_user, \
+    add_user_to_project
+from model.ProjectMember import ProjectMember
 
 from model.Task import Task
 from model.Column import Column
 from model.Board import Board
+from model.User import User
 
 app = FastAPI()
 
@@ -68,3 +71,11 @@ async def update_board(board: Board, board_id: int):
 @app.get("/logs")
 async def get_history():
     return get_logs()
+
+@app.post("/users")
+async def create_user(user: User):
+    return register_user(user)
+
+@app.post("/project")
+async def assign_user(project_member: ProjectMember):
+    return add_user_to_project(project_member)

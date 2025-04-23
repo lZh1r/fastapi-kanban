@@ -1,11 +1,11 @@
-import time
-
 import psycopg2
 
+from model.ProjectMember import ProjectMember
 from model.Task import Task
 from model.Column import Column
 from model.Board import Board
 from model.Log import log
+from model.User import User
 
 conn = psycopg2.connect(
     host="localhost",
@@ -111,3 +111,19 @@ def get_logs():
     with conn.cursor() as cur:
         cur.execute("SELECT * FROM history ORDER BY id;")
         return cur.fetchall()
+
+def register_user(user: User):
+    with conn.cursor() as cur:
+        cur.execute(
+            'INSERT INTO users (username) VALUES (%s);',
+            (user.username,)
+        )
+    return True
+
+def add_user_to_project(project_member: ProjectMember):
+    with conn.cursor() as cur:
+        cur.execute(
+            "INSERT INTO project_members (user_id, board_id) VALUES (%s, %s);",
+            (project_member.user_id, project_member.board_id)
+        )
+    return True
