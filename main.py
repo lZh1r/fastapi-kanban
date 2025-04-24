@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from db import get_all_tasks, get_all_columns, get_all_boards, delete_task, insert_task, insert_column, delete_column, \
     insert_board, delete_board, edit_column, edit_task, edit_board, get_tasks_from_col, get_logs, register_user, \
-    add_user_to_project
+    add_user_to_project, remove_user_to_project
 from model.ProjectMember import ProjectMember
 
 from model.Task import Task
@@ -79,3 +79,7 @@ async def create_user(user: User):
 @app.post("/project")
 async def assign_user(project_member: ProjectMember):
     return add_user_to_project(project_member)
+
+@app.delete("/project")
+async def delete_user(project_member: ProjectMember):
+    return remove_user_to_project(project_member)

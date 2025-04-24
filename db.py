@@ -107,6 +107,7 @@ def edit_board(board: Board, board_id: int):
         )
     return True
 
+
 def get_logs():
     with conn.cursor() as cur:
         cur.execute("SELECT * FROM history ORDER BY id;")
@@ -124,6 +125,14 @@ def add_user_to_project(project_member: ProjectMember):
     with conn.cursor() as cur:
         cur.execute(
             "INSERT INTO project_members (user_id, board_id) VALUES (%s, %s);",
+            (project_member.user_id, project_member.board_id)
+        )
+    return True
+
+def remove_user_to_project(project_member: ProjectMember):
+    with conn.cursor() as cur:
+        cur.execute(
+            "DELETE FROM project_members WHERE (user_id, board_id) = (%s, %s);",
             (project_member.user_id, project_member.board_id)
         )
     return True
