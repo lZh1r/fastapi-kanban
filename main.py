@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 
-from db import get_all_tasks, get_all_columns, get_all_boards, delete_task, insert_task, insert_column, delete_column, \
-    insert_board, delete_board, edit_column, edit_task, edit_board, get_tasks_from_col, get_logs, register_user, \
-    add_user_to_project, remove_user_to_project
+from crud.board import get_all_boards, insert_board, delete_board, edit_board
+from crud.column import get_all_columns, insert_column, delete_column, edit_column
+from crud.log import get_logs
+from crud.task import get_all_tasks, delete_task, insert_task, edit_task, get_tasks_from_col
+from crud.user import register_user, add_user_to_project, remove_user_from_project
 from model.ProjectMember import ProjectMember
 
 from model.Task import Task
@@ -82,4 +84,4 @@ async def assign_user(project_member: ProjectMember):
 
 @app.delete("/project")
 async def delete_user(project_member: ProjectMember):
-    return remove_user_to_project(project_member)
+    return remove_user_from_project(project_member)
