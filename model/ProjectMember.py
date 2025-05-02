@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass
-class ProjectMember:
+class ProjectMember(BaseModel):
     user_id: int
     board_id: int

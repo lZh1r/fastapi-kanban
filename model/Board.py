@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass
-class Board:
+class Board(BaseModel):
     title: str
     id: int = 0
