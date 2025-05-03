@@ -7,11 +7,11 @@ def get_all_columns():
         cur.execute('SELECT * FROM "column" ORDER BY id;')
         return cur.fetchall()
 
-def insert_column(col: Column):
+def insert_column(column: Column):
     with conn.cursor() as cur:
         cur.execute(
             'INSERT INTO "column" (board_id, title) VALUES (%s, %s);',
-            (col.board_id, col.title)
+            (column.board_id, column.title)
         )
     return True
 
