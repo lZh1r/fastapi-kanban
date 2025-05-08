@@ -2,10 +2,10 @@ from fastapi import FastAPI
 
 from crud.log import get_logs
 
-from routers.crud.board import board_router
-from routers.crud.column import column_router
-from routers.crud.task import task_router
-from routers.crud.user import user_router
+from routers.board import board_router
+from routers.column import column_router
+from routers.task import task_router
+from routers.user import user_router
 
 app = FastAPI()
 app.include_router(task_router, tags=["task"])
